@@ -1,7 +1,9 @@
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
+#include <stb/stb_image.h>
 
+#include "Texture.h"
 #include"shaderClass.h"
 #include"VAO.h"
 #include"VBO.h"
@@ -12,45 +14,20 @@
 // Vertex positions followed by RGB colors.
 GLfloat vertices[] =
 {
-	// Position                    // RGB                         Vertex
-	-0.75f,   -0.60f,    0.0f,     0.80f,  0.00f,  0.05f, // 0: red
-	-0.375f,  -0.60f,    0.0f,     0.90f,  0.425f, 0.025f,// 1
-	 0.00f,   -0.60f,    0.0f,     1.00f,  0.85f,  0.00f, // 2: red + green
-	 0.375f,  -0.60f,    0.0f,     0.50f,  0.675f, 0.06f, // 3
-	 0.75f,   -0.60f,    0.0f,     0.00f,  0.50f,  0.12f, // 4: green
-
-	-0.5625f, -0.275f,  0.0f,     0.825f, 0.00f,  0.525f,// 5
-	-0.1875f, -0.275f,  0.0f,     0.925f, 0.425f, 0.50f, // 6
-	 0.1875f, -0.275f,  0.0f,     0.50f,  0.85f,  0.50f, // 7
-	 0.5625f, -0.275f,  0.0f,     0.00f,  0.675f, 0.56f, // 8
-
-	-0.375f,   0.05f,   0.0f,     0.85f,  0.00f,  1.00f, // 9: red + blue
-	 0.00f,    0.05f,   0.0f,     0.425f, 0.425f, 1.00f, // 10
-	 0.375f,   0.05f,   0.0f,     0.00f,  0.85f,  1.00f, // 11: green + blue
-
-	-0.1875f,  0.375f,  0.0f,     0.45f,  0.075f, 0.95f, // 12
-	 0.1875f,  0.375f,  0.0f,     0.025f, 0.50f,  0.95f, // 13
-
-	 0.00f,    0.70f,   0.0f,     0.05f,  0.15f,  0.90f  // 14: blue
+	// Position                // RGB           //Texture Coordinates
+	-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	 0.0f, 0.0f, // Lower left corner
+	-0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	 0.0f, 1.0f, // Upper left corner
+	 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	 1.0f, 1.0f, // Upper right corner
+	 0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	 1.0f, 0.0f  // Lower right corner
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
-	// Left large section
-	0, 1, 5,
-	1, 2, 6,
-	5, 6, 9,
-
-	// Right large section
-	2, 3, 7,
-	3, 4, 8,
-	7, 8, 11,
-
-	// Top large section
-	9, 10, 12,
-	10, 11, 13,
-	12, 13, 14,
+	// Upper triangle
+	0, 2, 1, 
+	// Lower triangle
+	0, 3, 2 
 
 };
 
@@ -69,8 +46,8 @@ int main()
 	// So that means we only have the modern functions
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Create a GLFWwindow object of 800 by 800 pixels, naming it "Hello Triangle"
-	GLFWwindow* window = glfwCreateWindow(800, 800, "Hello Triangle", NULL, NULL);
+	// Create a GLFWwindow object of 800 by 800 pixels, naming it "Welcome Terraria"
+	GLFWwindow* window = glfwCreateWindow(800, 800, "WorkSpace", NULL, NULL);
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -104,14 +81,19 @@ int main()
 	EBO EBO1(indices, sizeof(indices));
 
 	// Links position and color data from each interleaved vertex to the VAO.
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	// Unbind all to prevent accidentally modifying them
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+	// Gets ID of uniform called "scale"
+	// GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
+	Texture Wbox("RTS_Crate.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Wbox.texUnit(shaderProgram, "tex0", 0);
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -122,9 +104,14 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 		// Use the one program that interpolates the per-vertex RGB colors.
 		shaderProgram.Activate();
+		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
+		// glUniform1f(uniID, 0.5f);
+		// Binds texture so that is appears in rendering
+		Wbox.Bind();
+		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, (void*)0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
@@ -137,6 +124,7 @@ int main()
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
+	Wbox.Delete();
 	shaderProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);

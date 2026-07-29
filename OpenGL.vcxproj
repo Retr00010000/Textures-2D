@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -77,13 +77,13 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies\GLFW\include;$(SolutionDir)..\Dependencies\GLEW\include;$(SolutionDir)..\Dependencies\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\GLAD\include;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\Dependencies\GLFW\lib-vc2022;$(SolutionDir)..\Dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -96,13 +96,13 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Dependencies\GLFW\include;$(SolutionDir)..\Dependencies\GLEW\include;$(SolutionDir)..\Dependencies\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\GLAD\include;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\GLEW\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\Dependencies\GLFW\lib-vc2022;$(SolutionDir)..\Dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;$(ProjectDir)Dependencies\GLEW\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -113,13 +113,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionPath);C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\dependancies\GLFW\include;C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\Dependencies\glew-2.3.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\GLAD\include;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\stb</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionPath);C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\dependancies\GLFW\lib-vc2022;C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\Dependencies\glew-2.3.1\lib\Release\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Dependencies\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionPath);C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\dependancies\GLFW\include;C:\Users\EL3ATTY\OneDrive\Desktop\OpenGL\Dependencies\glew-2.3.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\GLAD\include;$(ProjectDir)Dependencies\GLFW\include;$(ProjectDir)Dependencies\stb</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +145,8 @@
     <ClCompile Include="source\EBO.cpp" />
     <ClCompile Include="source\glad.c" />
     <ClCompile Include="source\ShaderClass.cpp" />
+    <ClCompile Include="source\stb.cpp" />
+    <ClCompile Include="source\Texture.cpp" />
     <ClCompile Include="source\VAO.cpp" />
     <ClCompile Include="source\VBO.cpp" />
   </ItemGroup>
@@ -155,8 +157,13 @@
   <ItemGroup>
     <ClInclude Include="source\EBO.h" />
     <ClInclude Include="source\shaderClass.h" />
+    <ClInclude Include="source\Texture.h" />
     <ClInclude Include="source\VAO.h" />
     <ClInclude Include="source\VBO.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="RTS_Crate.png" />
+    <Image Include="tera.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
